@@ -52,7 +52,7 @@ def filterText(update, context):
         if m != None:
             pCode = m.group(0)
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text=newReferURL(pCode))
-        context.bot.delete_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id)
+        context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
 
 def main():
     """Start the bot."""

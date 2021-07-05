@@ -52,7 +52,7 @@ def filterText(update, context):
         if m != None:
             pCode = m.group(0)
         sender = update.message.from_user.first_name
-        sender = "<a href=\"tg://user?id="+update.message.from_user.user_id+">"+update.message.from_user.first_name+"</a>"
+        sender = "<a href=\"tg://user?id="+update.message.from_user.id+">"+update.message.from_user.first_name+"</a>"
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 APORTE DE <b>"+sender+"</b> \n➡️ "+newReferURL(pCode),parse_mode='HTML')
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
 

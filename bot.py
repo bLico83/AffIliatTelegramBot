@@ -51,8 +51,9 @@ def filterText(update, context):
         m = re.search(r'(?:dp\/[\w]*)|(?:gp\/product\/[\w]*)',msg[start:].split(" ")[0])
         if m != None:
             pCode = m.group(0)
+            short = baseURL+pCode
         sender = update.message.from_user.first_name
-        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 APORTE DE <b>"+sender+"</b> \n➡️ <a href="+newReferURL(pCode)+">"baseURL+pCode+"</a>",parse_mode='HTML')
+        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 APORTE DE <b>"+sender+"</b> \n➡️ <a href="+newReferURL(pCode)+">"+short+"</a>",parse_mode='HTML')
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
 
 def main():

@@ -5,7 +5,6 @@ import logging
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 from telegram import MessageEntity
-from aliexpress_api import AliexpressApi, models
 import re
 import requests
 import os
@@ -13,19 +12,15 @@ import os
 PORT = int(os.environ.get('PORT', 5000))
 
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+
 logger = logging.getLogger(__name__)
-
-
 #Read env variables
 TOKEN = os.environ['TOKEN']
 baseURL = os.environ['baseURL'] 
 affiliate_tag = os.environ['affiliate_tag']
 HEROKU_URL = os.environ['HEROKU_URL']
-ALITOKEN = os.environ['ALITOKEN']
-SECRET = os.environ['SECRET']
-TRACKING_ID = os.environ['TRACKING_ID']
-aliexpress = AliexpressApi(ALITOKEN, SECRET, models.Language.EN, models.Currency.EUR, TRACKING_ID)
 
 # baseURL should have https and www before amazon, but we also want to detect URL without it
 # Ensure that we can detect all but the baseURL has the correct https URL
@@ -77,16 +72,7 @@ def filterText(update, context):
         sender = "<a href=\"tg://user?id="+str(update.message.from_user.id)+"\">"+update.message.from_user.first_name+"</a>"
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+link,parse_mode='HTML')
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
-    start = msg.find("aliexpress")
-    if start!=-1:
-        msg = msg[start:].split(" ")[0]
-        affiliate_links = aliexpress.get_affiliate_links(msg)
-        msg = affiliate_links[0].promotion_link
-        link = "<a href=\""+msg[start:].split(" ")[0]+"\">"+msg[start:].split(" ")[0]+"</a>"
-        sender = "<a href=\"tg://user?id="+str(update.message.from_user.id)+"\">"+update.message.from_user.first_name+"</a>"
-        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+link,parse_mode='HTML')
-        context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
-        
+
 def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.

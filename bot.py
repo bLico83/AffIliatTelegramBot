@@ -72,6 +72,9 @@ def filterText(update, context):
         sender = "<a href=\"tg://user?id="+str(update.message.from_user.id)+"\">"+update.message.from_user.first_name+"</a>"
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+link,parse_mode='HTML')
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
+    start = msg.find("aliexpress")
+    if start!=-1:
+        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="ALIEXPRESS",parse_mode='HTML')
 
 def main():
     """Start the bot."""

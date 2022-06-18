@@ -5,7 +5,8 @@ import logging
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 from telegram import MessageEntity
-from aliexpress_api import AliExpressApi
+from aliexpress_api import AliexpressApi, models
+aliexpress = AliexpressApi(KEY, SECRET, models.Language.EN, models.Currency.EUR, TRACKING_ID)
 import re
 import requests
 import os
@@ -15,8 +16,6 @@ PORT = int(os.environ.get('PORT', 5000))
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-aliexpress_api = AliExpressApi()
 
 
 #Read env variables
@@ -78,7 +77,8 @@ def filterText(update, context):
     start = msg.find("aliexpress")
     if start!=-1:
         msg = msg[start:].split(" ")[0]
-        msg = get_promotion_link(self, msg)
+        affiliate_links = aliexpress.get_affiliate_links(msg)
+        msg = affiliate_links[0].promotion_link
         link = "<a href=\""+msg[start:].split(" ")[0]+"\">"+msg[start:].split(" ")[0]+"</a>"
         sender = "<a href=\"tg://user?id="+str(update.message.from_user.id)+"\">"+update.message.from_user.first_name+"</a>"
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+link,parse_mode='HTML')

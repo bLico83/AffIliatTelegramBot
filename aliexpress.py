@@ -3,7 +3,6 @@ import requests
 import sys
 
 from backports.configparser import ConfigParser
-from enum import Enum
 
 class AliExpressApi(object):
     API_URL_BASE = 'http://gw.api.alibaba.com/openapi/param2/2/portals.open/'

@@ -5,6 +5,7 @@ import logging
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 from telegram import MessageEntity
+from aliexpress_api import AliExpressApi
 import re
 import requests
 import os
@@ -12,10 +13,12 @@ import os
 PORT = int(os.environ.get('PORT', 5000))
 
 # Enable logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+aliexpress_api = AliExpressApi()
+
+
 #Read env variables
 TOKEN = os.environ['TOKEN']
 baseURL = os.environ['baseURL'] 

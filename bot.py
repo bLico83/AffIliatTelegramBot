@@ -6,7 +6,6 @@ from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 from telegram import MessageEntity
 from aliexpress_api import AliexpressApi, models
-aliexpress = AliexpressApi(78491, SECRET, models.Language.EN, models.Currency.EUR, TRACKING_ID)
 import re
 import requests
 import os
@@ -23,6 +22,10 @@ TOKEN = os.environ['TOKEN']
 baseURL = os.environ['baseURL'] 
 affiliate_tag = os.environ['affiliate_tag']
 HEROKU_URL = os.environ['HEROKU_URL']
+ALITOKEN = os.environ['ALITOKEN']
+SECRET = os.environ['SECRET']
+TRACKING_ID = os.environ['TRACKING_ID']
+aliexpress = AliexpressApi(ALITOKEN, SECRET, models.Language.EN, models.Currency.EUR, TRACKING_ID)
 
 # baseURL should have https and www before amazon, but we also want to detect URL without it
 # Ensure that we can detect all but the baseURL has the correct https URL

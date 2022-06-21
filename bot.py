@@ -87,7 +87,7 @@ def filterText(update, context):
             msg = "https://s.click."+msg[start:].split(" ")[0]
         else:
             if i != None:
-                msg = msg[start:].split(" ")[0]
+                msg = "https://"+msg[start:].split(" ")[0]
             else:
                 msg = "https://a."+msg[start:].split(" ")[0]
         alilink = aliexpress.get_affiliate_links(msg)

@@ -82,16 +82,17 @@ def filterText(update, context):
     start = msg.find("aliexpress")
     if start!=-1:
         e = re.search(r'(?:\/e\/[\w]*)',msg[start:].split(" ")[0])
-        i = re.search(r'(?:\/item\/[\w]*)',msg[start:].split(" ")[0])
+        #i = re.search(r'(?:\/item\/[\w]*)',msg[start:].split(" ")[0])
+        a = re.search(r'(?:\/_[\w]*)',msg[start:].split(" ")[0])
         if e != None:
             msg = "https://s.click."+msg[start:].split(" ")[0]
         else:
-            if i != None:
-                msg = "https://"+msg[start:].split(" ")[0]
-            else:
+            if a != None:
                 msg = "https://a."+msg[start:].split(" ")[0]
+            else:
+                msg = "https://"+msg[start:].split(" ")[0]
         alilink = aliexpress.get_affiliate_links(msg)
-        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text=msg,parse_mode='HTML')
+        #context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text=msg,parse_mode='HTML')
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+alilink[0].promotion_link,parse_mode='HTML')
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
 def main():

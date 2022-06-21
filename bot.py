@@ -82,8 +82,11 @@ def filterText(update, context):
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
     start = msg.find("aliexpress")
     if start!=-1:
-        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="ALIEXPRESS",parse_mode='HTML')
-
+        msg = unshortURL(msg[start:].split()[0])
+        # context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="ALIEXPRESS",parse_mode='HTML')
+        alilink = aliexpress.get_affiliate_links(msg)
+        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+alilink[0].promotion_link,parse_mode='HTML')
+        context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
 def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.

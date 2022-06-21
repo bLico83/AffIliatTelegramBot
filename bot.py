@@ -81,7 +81,7 @@ def filterText(update, context):
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
     start = msg.find("aliexpress")
     if start!=-1:
-        msg = msg[start:].split()[0]
+        msg = update.message.text[start:].split()[0]
         #alilink = aliexpress.get_affiliate_links(msg)
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text=msg,parse_mode='HTML')
         #context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+msg+"</b> \n\n➡️ "+alilink[0].promotion_link,parse_mode='HTML')

@@ -59,12 +59,12 @@ def filterText(update, context):
     pCode=""
     msg = update.message.text
     start = msg.find("amzn.eu")
+    sender = "<a href=\"tg://user?id="+str(update.message.from_user.id)+"\">"+update.message.from_user.first_name+"</a>"
     if start!=-1:
         m = re.search(r'(?:\/d\/[\w]*)',msg[start:].split(" ")[0])
         if m != None:
             msg = m.group(0)
         link = "<a href=\""+msg[start:24]+"?tag="+affiliate_tag+"\">"+msg[start:24]+"</a>"
-        sender = "<a href=\"tg://user?id="+str(update.message.from_user.id)+"\">"+update.message.from_user.first_name+"</a>"
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+link,parse_mode='HTML')
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
     start = msg.find("amzn.to")
@@ -77,7 +77,6 @@ def filterText(update, context):
         if m != None:
             pCode = m.group(0)
         link = "<a href=\""+newReferURL(pCode)+"\">"+baseURL+pCode+"</a>"
-        sender = "<a href=\"tg://user?id="+str(update.message.from_user.id)+"\">"+update.message.from_user.first_name+"</a>"
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+link,parse_mode='HTML')
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
     start = msg.find("aliexpress")

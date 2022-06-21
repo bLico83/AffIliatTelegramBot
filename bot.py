@@ -83,7 +83,7 @@ def filterText(update, context):
     if start!=-1:
         e = re.search(r'(?:\/e\/[\w]*)',msg[start:].split(" ")[0])
         #i = re.search(r'(?:\/item\/[\w]*)',msg[start:].split(" ")[0])
-        a = re.search(r'(?:\/_[\w]*)',msg[start:].split(" ")[0])
+        a = re.search(r'(?:com\/_[\w]*)',msg[start:].split(" ")[0])
         if e != None:
             msg = "https://s.click."+msg[start:].split(" ")[0]
         else:

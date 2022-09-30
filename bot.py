@@ -81,8 +81,7 @@ def filterText(update, context):
     if start!=-1:
         e = re.search(r'(?:\/e\/[\w]*)',msg[start:].split(" ")[0])
         a = re.search(r'(?:com\/_[\w]*)',msg[start:].split(" ")[0])
-        i = re.search(r'(?:https[\w]*)',msg[start:].split("?")[0])
-        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de PRUEBA \n\n➡️ "+i,parse_mode='HTML')
+        i = re.search(r'(?:com\/item\/[\w]*)',msg[start:].split(" ")[0])
         if e != None:
             pCode = e.group(0)
             msg = "https://s.click.aliexpress.com"+pCode
@@ -91,6 +90,7 @@ def filterText(update, context):
                 pCode = a.group(0)
                 msg = "https://a.aliexpress.com"+pCode
             else:
+                context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de PRUEBA \n\n➡️ "+i,parse_mode='HTML')
                 pCode = i.group(0)
                 msg = "https://"+pCode
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de PRUEBA \n\n➡️ "+msg,parse_mode='HTML')

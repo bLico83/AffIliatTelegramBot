@@ -90,7 +90,6 @@ def filterText(update, context):
                 pCode = a.group(0)
                 msg = "https://a.aliexpress."+pCode
             else:
-                context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de PRUEBA \n\n➡️ "+i,parse_mode='HTML')
                 pCode = i.group(0)
                 msg = "https://"+pCode
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de PRUEBA \n\n➡️ "+msg,parse_mode='HTML')

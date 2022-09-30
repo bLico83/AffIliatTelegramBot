@@ -93,10 +93,9 @@ def filterText(update, context):
                 pCode = i.group(0)
                 msg = "https://es.aliexpress."+pCode+".html"
         alilink = aliexpress.get_affiliate_links(msg)
-        if alilink[0].promotion_link!=-1:
-            context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+str(alilink),parse_mode='HTML')
-            context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+alilink[0].promotion_link,parse_mode='HTML')
-            context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
+        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+str(alilink),parse_mode='HTML')
+        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+alilink[0].promotion_link,parse_mode='HTML')
+        context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
 
 
 def main():

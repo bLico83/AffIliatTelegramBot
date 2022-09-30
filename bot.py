@@ -81,7 +81,7 @@ def filterText(update, context):
     if start!=-1:
         e = re.search(r'(?:\/e\/[\w]*)',msg[start:].split(" ")[0])
         a = re.search(r'(?:com\/_[\w]*)',msg[start:].split(" ")[0])
-        i = re.search(r'(?:https:\/\/[\w]*)',msg[start:].split(" ")[0])
+        i = re.search(r'(?:https:\/\/[\w]*)',msg[start:].split("?")[0])
         if e != None:
             pCode = e.group(0)
             msg = "https://s.click.aliexpress.com"+pCode

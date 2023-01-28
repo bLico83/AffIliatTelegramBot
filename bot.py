@@ -2,6 +2,8 @@
 import telegram as tg
 from telegram.ext import Updater
 import logging
+import json
+import urllib.parse
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 from telegram import MessageEntity
@@ -49,8 +51,7 @@ def newReferURL(pcode):
 
 #Expand shorted URL (amzn.to links) to normal Amazon URL
 def unshortURL(url):
-    session = requests.Session()  # so connections are recycled
-    resp = session.head("https://"+url, allow_redirects=True)
+    resp = requests.get("https://"+url)
     return resp.url
 
 #Filter the msg text to extract the URL if found. Then send the corresponding reply
@@ -59,13 +60,10 @@ def filterText(update, context):
     pCode=""
     msg = update.message.text
     sender = "<a href=\"tg://user?id="+str(update.message.from_user.id)+"\">"+update.message.from_user.first_name+"</a>"
-    start = msg.find("amzn.eu")
-    if start!=-1:
-        link = "<a href=\"https://"+msg[start:].split(" ")[0]+"?tag="+affiliate_tag+"\">"+msg[start:].split(" ")[0]+"</a>"
-        #sender = "<a href=\"tg://user?id="+str(update.message.from_user.id)+"\">"+update.message.from_user.first_name+"</a>"
-        context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+link,parse_mode='HTML')
-        context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
     start = msg.find("amzn.to")
+    if start!=-1:
+        msg = unshortURL(msg[start:].split()[0])
+    start = msg.find("amzn.eu")
     if start!=-1:
         msg = unshortURL(msg[start:].split()[0])
     start = msg.find(searchURL)
@@ -74,7 +72,10 @@ def filterText(update, context):
         m = re.search(r'(?:dp\/[\w]*)|(?:gp\/product\/[\w]*)|(?:gp\/aw\/d\/[\w]*)',msg[start:].split(" ")[0])
         if m != None:
             pCode = m.group(0)
-        link = "<a href=\""+newReferURL(pCode)+"\">"+baseURL+pCode+"</a>"
+        reflong = newReferURL(pCode)
+        bitly = json.loads(requests.get("http://api.bit.ly/shorten?version=2.0.1&longUrl="+urllib.parse.quote(reflong, safe='')+"&login=ghir0&apiKey=R_c7d78316d223d5a1d7827d58d80e76be&format=json").text)
+        refshort = bitly["results"][reflong]['shortUrl']
+        link = "<a href=\""+reflong+"\">"+str(refshort)+"</a>"
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+link,parse_mode='HTML')
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
     start = msg.find("aliexpress")

@@ -72,10 +72,11 @@ def filterText(update, context):
         m = re.search(r'(?:dp\/[\w]*)|(?:gp\/product\/[\w]*)|(?:gp\/aw\/d\/[\w]*)',msg[start:].split(" ")[0])
         if m != None:
             pCode = m.group(0)
-        reflong = newReferURL(pCode)
-        bitly = json.loads(requests.get("http://api.bit.ly/shorten?version=2.0.1&longUrl="+urllib.parse.quote(reflong, safe='')+"&login=ghir0&apiKey=R_c7d78316d223d5a1d7827d58d80e76be&format=json").text)
-        refshort = bitly["results"][reflong]['shortUrl']
-        link = "<a href=\""+reflong+"\">"+str(refshort)+"</a>"
+#        reflong = newReferURL(pCode)
+#        bitly = json.loads(requests.get("http://api.bit.ly/shorten?version=2.0.1&longUrl="+urllib.parse.quote(reflong, safe='')+"&login=ghir0&apiKey=R_c7d78316d223d5a1d7827d58d80e76be&format=json").text)
+#        refshort = bitly["results"][reflong]['shortUrl']
+#        link = "<a href=\""+reflong+"\">"+str(refshort)+"</a>"
+        link = "<a href=\""+newReferURL(pCode)+"\">"+baseURL+pCode+"</a>"
         context.bot.send_message(chat_id=update.message.chat_id,reply_to_message_id=update.message.message_id, text="🔥 Aporte de  <b>"+sender+"</b> \n\n➡️ "+link,parse_mode='HTML')
         context.bot.delete_message(chat_id=update.message.chat_id,message_id=update.message.message_id)
     start = msg.find("aliexpress")
